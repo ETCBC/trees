@@ -1,4 +1,4 @@
-[![SWH](https://archive.softwareheritage.org/badge/origin/https://github.com/ETCBC/trees/)](https://archive.softwareheritage.org/browse/origin/https://github.com/ETCBC/trees/)
+[![SWH](https://archive.softwareheritage.org/badge/origin/https://github.com/ETCBC/trees/)](https://archive.softwareheritage.org/browse/origin/?origin_url=https://github.com/ETCBC/trees)
 [![DOI](https://zenodo.org/badge/364811052.svg)](https://zenodo.org/badge/latestdoi/364811052)
 [![etcbc](programs/images/etcbc.png)](http://www.etcbc.nl)
 
