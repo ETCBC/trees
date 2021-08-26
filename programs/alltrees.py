@@ -76,10 +76,10 @@ EXPECTED_MISMATCHES = {
     "4b": 0,
     "2016": 0,
     "2017": 0,
-    "c": 0,
+    "2021": 0,
 }
 
-VERSIONS = ("3", "4", "4b", "2016", "2017", "c")
+VERSIONS = ("3", "4", "4b", "2016", "2017", "2021")
 
 
 def setVersion(version):
