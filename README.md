@@ -2,8 +2,11 @@
 
 [![SWH](https://archive.softwareheritage.org/badge/origin/https://github.com/ETCBC/trees/)](https://archive.softwareheritage.org/browse/origin/?origin_url=https://github.com/ETCBC/trees)
 [![DOI](https://zenodo.org/badge/364811052.svg)](https://zenodo.org/badge/latestdoi/364811052)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+
 [![etcbc](programs/images/etcbc.png)](http://www.etcbc.nl)
 [![dans](programs/images/dans.png)](https://dans.knaw.nl/en)
+[![tf](programs/images/tf-small.png)](https://annotation.github.io/text-fabric/tf)
 
 ### BHSA Family
 
@@ -19,6 +22,16 @@
   from internal ETCBC data files
 * [shebanq](https://github.com/etcbc/shebanq) Engine of the
   [shebanq](https://shebanq.ancient-data.org) website
+
+### Extended family
+
+* [dss](https://github.com/etcbc/dss) Dead Sea Scrolls
+* [extrabiblical](https://github.com/etcbc/extrabiblical)
+  Extra-biblical writings from ETCBC-encoded texts
+* [peshitta](https://github.com/etcbc/peshitta)
+  Syriac translation of the Hebrew Bible
+* [syrnt](https://github.com/etcbc/syrnt)
+  Syriac translation of the New Testament
 
 ## About
 
@@ -36,11 +49,10 @@ The results of this study are being delivered in several forms, summarized here.
 * **Program code**: a
   [Jupyter notebook](https://github.com/ETCBC/trees/tree/master/programs).
 
-![tf](programs/images/tf-small.png)
-[![dans](programs/images/dans.png)](https://www.dans.knaw.nl)
-
 ## Author
 * [Dirk Roorda](https://pure.knaw.nl/portal/en/persons/dirk-roorda) -
   [DANS](https://dans.knaw.nl/en/front-page?set_language=en) -
   author of the supporting library
   [Text-Fabric](https://github.com/annotation/text-fabric).
+
+Thanks to Christian Canu-Højgaard for useful feedback after using the resulting trees.
