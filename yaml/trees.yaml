@@ -1,0 +1,6 @@
+tree:
+  desc: "🆗 sentence: penn treebank"
+  eg: "(VP(vb 2))"
+treen:
+  desc: "🆗 sentence: penn treebank with node numbers included"
+  eg: "(VP{651574}(vb 2))"

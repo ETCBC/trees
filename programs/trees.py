@@ -228,8 +228,10 @@ get_ipython().run_line_magic('autoreload', '2')
 import sys
 import os
 import collections
+import yaml
 
 from tf.fabric import Fabric
+from tf.core.helpers import formatMeta
 
 from tree import Tree
 import utils
@@ -312,7 +314,7 @@ TF = Fabric(locations=coreTf, modules=[""])
 # [BHSA](https://github.com/etcbc/bhsa) data.
 # See the [feature documentation](https://etcbc.github.io/bhsa/features/hebrew/2017/0_home.html) for more info.
 
-# In[2]:
+# In[6]:
 
 
 sp = "part_of_speech" if VERSION == "3" else "sp"
@@ -323,7 +325,7 @@ g_word_utf8 = "text" if VERSION == "3" else "g_word_utf8"
 # -
 
 
-# In[3]:
+# In[7]:
 
 
 api = TF.load(
@@ -342,7 +344,7 @@ api.makeAvailableIn(globals())
 
 # ## Node types
 
-# In[4]:
+# In[8]:
 
 
 typeInfo = (
@@ -358,13 +360,13 @@ typeOrder = [t[0] for t in typeInfo]
 
 # ## Part of speech
 
-# In[5]:
+# In[9]:
 
 
 sorted(Fs(sp).freqList(), key=lambda x: x[0])
 
 
-# In[6]:
+# In[10]:
 
 
 posTable = {
@@ -397,13 +399,13 @@ posTable = {
 
 # ## Rela
 
-# In[7]:
+# In[11]:
 
 
 sorted(Fs(rela).freqList(), key=lambda x: x[0])
 
 
-# In[8]:
+# In[12]:
 
 
 ccrInfo = {
@@ -430,7 +432,7 @@ ccrInfo = {
 }
 
 
-# In[9]:
+# In[13]:
 
 
 treeTypes = ("sentence", "clause", "phrase", "subphrase", "word")
@@ -463,7 +465,7 @@ ccrClass = dict((c[0], c[1][0]) for c in ccrInfo.items())
 # 
 # This will take a while (25 seconds approx on a MacBook Air 2012, 6 on a MacBook Pro in 2017, and now just 4 seconds).
 
-# In[11]:
+# In[14]:
 
 
 tree = Tree(
@@ -478,7 +480,7 @@ tree = Tree(
 )
 
 
-# In[12]:
+# In[15]:
 
 
 tree.restructureClauses(ccrClass)
@@ -490,7 +492,7 @@ elderSister = results["elderSister"]
 utils.caption(4, "Ready for processing")
 
 
-# In[ ]:
+# In[16]:
 
 
 # # Sanity check
@@ -500,7 +502,7 @@ utils.caption(4, "Ready for processing")
 # `skip`, so that later on we can skip them easily.
 
 
-# In[ ]:
+# In[17]:
 
 
 utils.caption(4, "Verifying whether all slots are preserved under restructuring")
@@ -514,7 +516,7 @@ expectedMismatches = {
 utils.caption(4, "Expected mismatches: {}".format(expectedMismatches.get(VERSION, "??")))
 
 
-# In[ ]:
+# In[18]:
 
 
 skip = set()
@@ -575,7 +577,7 @@ else:
 # By supplying a different function, you can control a lot of the characteristics of the
 # written tree.
 
-# In[25]:
+# In[19]:
 
 
 def getTag(node):
@@ -594,7 +596,7 @@ def getTag(node):
 
 # This is a variant on `getTag()` where we put the node number into the tag, between `{ }`.
 
-# In[26]:
+# In[20]:
 
 
 def getTagN(node):
@@ -617,7 +619,7 @@ def getTagN(node):
 # 
 # Now we generate the data for two TF features `tree` and `treen`:
 
-# In[31]:
+# In[21]:
 
 
 utils.caption(4, "Exporting {} trees to TF".format(rootType))
@@ -645,30 +647,33 @@ for node in F.otype.s(rootType):
 utils.caption(4, "{} trees composed".format(s))
 
 
-# In[32]:
+# In[25]:
+
+
+genericMetaPath = f"{thisRepo}/yaml/generic.yaml"
+treesMetaPath = f"{thisRepo}/yaml/trees.yaml"
+
+with open(genericMetaPath) as fh:
+    genericMeta = yaml.load(fh, Loader=yaml.FullLoader)
+    genericMeta["version"] = VERSION
+with open(treesMetaPath) as fh:
+    treesMeta = formatMeta(yaml.load(fh, Loader=yaml.FullLoader))
+
+metaData = {"": genericMeta, **treesMeta}
+
+
+# In[26]:
 
 
 nodeFeatures = dict(tree=treeData, treen=treeDataN)
-metaData = dict(
-    tree=dict(
-        valueType="str",
-        description="penn treebank represententation for sentences",
-        converter="Dirk Roorda",
-        convertor="trees.ipynb",
-        url="https://github.com/etcbc/trees/trees.ipynb",
-        coreData="BHSA",
-        coreVersion=VERSION,
-    ),
-    treen=dict(
-        valueType="str",
-        description="penn treebank represententation for sentences with node numbers included",
-        converter="Dirk Roorda",
-        convertor="trees.ipynb",
-        url="https://github.com/etcbc/trees/trees.ipynb",
-        coreData="BHSA",
-        coreVersion=VERSION,
-    ),
-)
+
+for f in nodeFeatures:
+    metaData[f]["valueType"] = "str"
+
+
+# In[27]:
+
+
 utils.caption(4, "Writing tree feature to TF")
 TFw = Fabric(locations=thisTempTf, silent=True)
 TFw.save(nodeFeatures=nodeFeatures, edgeFeatures={}, metaData=metaData)
@@ -677,8 +682,6 @@ TFw.save(nodeFeatures=nodeFeatures, edgeFeatures={}, metaData=metaData)
 # # Diffs
 # 
 # Check differences with previous versions.
-
-# In[37]:
 
 # In[ ]:
 
